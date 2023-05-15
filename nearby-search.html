@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Places Nearby Search Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>Restaurant Name:</h1>
+  <ul id="restaurant-list"></ul>
+
+  <script>
+    window.addEventListener('load', function() {
+      let apikey = "";
+      let location = "laux in bethalto illinois";
+      let lat = "38.908";
+      let long = "-90.043";
+      let radius = "2500";
+      let keyWord = ""; //leave blank to call all restaurants in the area
+      let type = "restaurant";
+      let proxyUrl = "https://cors-anywhere.herokuapp.com/";
+      let apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat}%2C${long}&radius=${radius}&type=${type}&keyword=${keyWord}&key=${apikey}`;
+
+      var config = {
+        method: 'get',
+        url: proxyUrl + apiUrl,
+        headers: { }
+      };
+
+      axios(config)
+        .then(function (response) {
+          let restaurants = response.data.results;
+          let list = document.getElementById("restaurant-list");
+          restaurants.forEach(restaurant => {
+            let listItem = document.createElement("li");
+            listItem.textContent = restaurant.name;
+            list.appendChild(listItem);
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
+  </script>
+</body>
+</html>

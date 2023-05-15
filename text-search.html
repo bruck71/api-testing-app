@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Places Text Search Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>Restaurant Name:</h1>
+  <p id="restaurant-name"></p>
+
+  <script>
+    window.addEventListener('load', function() {
+      let apikey = "";
+      let query1 = "laux in bethalto illinois";
+      let proxyUrl = "https://cors-anywhere.herokuapp.com/";
+      let apiUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query1}&key=${apikey}`;
+
+      var config = {
+        method: 'get',
+        url: proxyUrl + apiUrl,
+        headers: { }
+      };
+
+      axios(config)
+        .then(function (response) {
+          let restaurantName = response.data.results[0].name;
+          document.getElementById("restaurant-name").textContent = restaurantName;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
+  </script>
+</body>
+</html>
